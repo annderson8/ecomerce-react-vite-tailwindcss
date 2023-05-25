@@ -8,6 +8,7 @@ import { MyOrder } from '../MyOrder';
 import { SignIn } from '../SignIn';
 import { NotFound } from '../NotFound';
 import { Navbar } from '../../components/NavBar';
+import { CheckoutSideMenu } from '../../components/CheckoutSideMenu';
 
 import './App.css';
 
@@ -30,6 +31,7 @@ function App() {
       <BrowserRouter>
         <AppRoutes />
         <Navbar />
+        <CheckoutSideMenu />
     </BrowserRouter>
     </ShoppingCartProvider>
   );
