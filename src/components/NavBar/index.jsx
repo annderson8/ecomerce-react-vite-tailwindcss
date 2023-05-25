@@ -5,7 +5,7 @@ import { ShoppingCartIcon } from '@heroicons/react/24/solid'
 import { ShoppingCartContext } from "../../contexts";
 
 const Navbar = () => {
-  const { count } = useContext(ShoppingCartContext);
+  const { cartProducts } = useContext(ShoppingCartContext);
   const activeStyle = "underline underline-offset-4";
 
   return (
@@ -64,7 +64,7 @@ const Navbar = () => {
         </li>
       </ul>
       <ul className="flex items-center gap-3">
-        <li className="text-black/60">anndersonrey@gmail.com</li>
+        <li className="text-black/60">rey@gmail.com</li>
         <li>
           <NavLink
             to="/my-orders"
@@ -91,7 +91,7 @@ const Navbar = () => {
         </li>
         <li className="flex items-center"> 
         <ShoppingCartIcon className='h-6 w-6 text-black'/> 
-        <span> {count}  </span>
+        <span> {cartProducts.length}  </span>
         </li>
       </ul>
     </nav>
