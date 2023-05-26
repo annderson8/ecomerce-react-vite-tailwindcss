@@ -29,7 +29,6 @@ const Card = (data) => {
   };
 
   const renderIcon = (id) => {
-
     const isInCart = cartProducts?.filter(product => product.id === id).length > 0;
 
     if (isInCart) {
@@ -49,7 +48,6 @@ const Card = (data) => {
       )
     }
   }
-
   return (
     <div
       className="bg-white cursor-pointer w-56 h-60 rounded-lg mb-12"

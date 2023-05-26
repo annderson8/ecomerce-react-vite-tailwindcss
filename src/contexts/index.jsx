@@ -1,29 +1,59 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
 export const ShoppingCartContext = createContext();
 
 export const ShoppingCartProvider = ({ children }) => {
 
-  const [count, setCount] = useState(0);
+  // Product Detail · Open/Close
   const [isProductDetailOpen, setIsProductDetailOpen] = useState(false);
-  const [productToShow, setProductToShow] = useState({});
-  const [cartProducts, setCartProducts] = useState([]);
-  const [isCheckoutSideMenuOpen, setIsCheckoutSideMenuOpen] = useState(false)
-  const [order, setOrder] = useState([])
-  
-  // const toggleProductDetail = () =>  setIsProductDetailOpen(!isProductDetailOpen);
-  
   const openProductDetail = () => setIsProductDetailOpen(true);
   const closeProductDetail = () => setIsProductDetailOpen(false);
-  
+
+  // Checkout Side Menu · Open/Close
+  const [isCheckoutSideMenuOpen, setIsCheckoutSideMenuOpen] = useState(false);
   const openCheckoutSideMenu = () => setIsCheckoutSideMenuOpen(true);
   const closeCheckoutSideMenu = () => setIsCheckoutSideMenuOpen(false);
+
+  // Product Detail · Show product
+  const [productToShow, setProductToShow] = useState({});
+
+  // Shopping Cart · Add products to cart
+  const [cartProducts, setCartProducts] = useState([]);
+
+  // Shopping Cart · Order
+  const [order, setOrder] = useState([]);
+
+  // Get products
+  const [items, setItems] = useState([]);
+  const [filteredItems, setFilteredItems] = useState([]);
+
+  // Get products by title
+  const [searchByTitle, setSearchByTitle] = useState('');
+
+  useEffect(() => {
+    fetch("https://fakestoreapi.com/products")
+      .then((response) => response.json())
+      .then((data) => setItems(data));
+  }, []);
+
+  const filteredItemsByTitle = (items, searchByTitle) => {
+    return items?.filter((item) =>
+      item.title.toLowerCase().includes(searchByTitle.toLowerCase())
+    );
+  };
+
+  useEffect(() => {
+    if (searchByTitle.length > 0) {
+      setFilteredItems(filteredItemsByTitle(items, searchByTitle));
+    }
+    else {
+      setFilteredItems(items)
+    }
+  }, [items, searchByTitle]);
 
   return (
     <ShoppingCartContext.Provider
       value={{
-        count,
-        setCount,
         isProductDetailOpen,
         openProductDetail,
         closeProductDetail,
@@ -36,6 +66,12 @@ export const ShoppingCartProvider = ({ children }) => {
         closeCheckoutSideMenu,
         order,
         setOrder,
+        items,
+        setItems,
+        searchByTitle,
+        setSearchByTitle,
+        filteredItems,
+        setFilteredItems,
       }}
     >
       {children}
