@@ -1,9 +1,37 @@
 import { createContext, useState, useEffect } from "react";
 
+export const initializeLocalStorage = () => {
+  const accountInLocalStorage = localStorage.getItem("account");
+  const signOutInLocalStorage = localStorage.getItem("sign-out");
+
+  let parsedAccount;
+  let parsedSignOut;
+
+  if (!accountInLocalStorage) {
+    localStorage.setItem("account", JSON.stringify({}));
+    parsedAccount = {};
+  } else {
+    parsedAccount = JSON.parse(accountInLocalStorage);
+  }
+
+  if (!signOutInLocalStorage) {
+    localStorage.setItem("sign-out", JSON.stringify(false));
+    parsedSignOut = false;
+  } else {
+    parsedSignOut = JSON.parse(signOutInLocalStorage);
+  }
+};
+
 export const ShoppingCartContext = createContext();
 
 export const ShoppingCartProvider = ({ children }) => {
 
+  // My account
+  const [account, setAccount] = useState({})
+
+  // Sign out
+  const [signOut, setSignOut] = useState(false)
+  
   // Product Detail · Open/Close
   const [isProductDetailOpen, setIsProductDetailOpen] = useState(false);
   const openProductDetail = () => setIsProductDetailOpen(true);
@@ -28,7 +56,7 @@ export const ShoppingCartProvider = ({ children }) => {
   const [filteredItems, setFilteredItems] = useState([]);
 
   // Get products by title
-  const [searchByTitle, setSearchByTitle] = useState('');
+  const [searchByTitle, setSearchByTitle] = useState("");
 
   useEffect(() => {
     fetch("https://fakestoreapi.com/products")
@@ -45,9 +73,8 @@ export const ShoppingCartProvider = ({ children }) => {
   useEffect(() => {
     if (searchByTitle.length > 0) {
       setFilteredItems(filteredItemsByTitle(items, searchByTitle));
-    }
-    else {
-      setFilteredItems(items)
+    } else {
+      setFilteredItems(items);
     }
   }, [items, searchByTitle]);
 
@@ -72,6 +99,10 @@ export const ShoppingCartProvider = ({ children }) => {
         setSearchByTitle,
         filteredItems,
         setFilteredItems,
+        account,
+        setAccount,
+        signOut,
+        setSignOut,
       }}
     >
       {children}
