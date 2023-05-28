@@ -24,7 +24,9 @@ const Navbar = () => {
     if (hasUserAnAccount && !isUserSignOut) {
       return (
         <>
-          <li className="text-black/60">{ account?.email }</li>
+          <li className="text-black/60 hidden tablet:hidden laptop:block desktop:block ">
+            { account?.email }
+          </li>
           <li>
             <NavLink
               to="/my-orders"
@@ -68,12 +70,12 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="flex justify-between items-center fixed z-10 top-0 w-full py-5 px-8 text-sm font-light bg-white">
+    <nav className="flex justify-between items-center fixed z-10 top-0 w-full py-5 px-8 text-sm font-light bg-white shadow-sm">
       <ul className="flex items-center gap-3">
         <li className="font-semibold text-lg">
           <NavLink to={`${isUserSignOut ? "/sign-in" : "/"}`}>Shopi</NavLink>
         </li>
-        <li>
+        <li className="hidden tablet:hidden laptop:block desktop:block ">
           <NavLink
             to="/"
             className={({ isActive }) => (isActive ? activeStyle : undefined)}
@@ -81,7 +83,7 @@ const Navbar = () => {
             All
           </NavLink>
         </li>
-        <li>
+        <li className="hidden tablet:hidden laptop:block desktop:block ">
           <NavLink
             to="/men"
             className={({ isActive }) => (isActive ? activeStyle : undefined)}
@@ -89,7 +91,7 @@ const Navbar = () => {
             Men
           </NavLink>
         </li>
-        <li>
+        <li className="hidden tablet:hidden laptop:block desktop:block ">
           <NavLink
             to="/women"
             className={({ isActive }) => (isActive ? activeStyle : undefined)}
@@ -97,7 +99,7 @@ const Navbar = () => {
             Women
           </NavLink>
         </li>
-        <li>
+        <li className="hidden tablet:hidden laptop:block desktop:block ">
           <NavLink
             to="/electronics"
             className={({ isActive }) => (isActive ? activeStyle : undefined)}
@@ -105,7 +107,7 @@ const Navbar = () => {
             Electronics
           </NavLink>
         </li>
-        <li>
+        <li className="hidden tablet:hidden laptop:block desktop:block ">
           <NavLink
             to="/jewelery"
             className={({ isActive }) => (isActive ? activeStyle : undefined)}
