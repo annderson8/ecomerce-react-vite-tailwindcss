@@ -4,11 +4,11 @@ import { ShoppingCartContext } from '../../contexts'
 
 
 const ShoppingCart = () => {
-  const {cartProducts,openCheckout,closeProductDetail } = useContext(ShoppingCartContext)
+  const {cartProducts,setIsCheckoutSideMenuOpen,setIsProductDetailOpen } = useContext(ShoppingCartContext)
 
   const openCheckoutSideMenu = () => {
-    openCheckout()
-    closeProductDetail()
+    setIsProductDetailOpen(false);
+    setIsCheckoutSideMenuOpen(true);
   }
 
   return (

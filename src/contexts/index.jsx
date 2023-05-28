@@ -1,46 +1,27 @@
 import { createContext, useState, useEffect } from "react";
-
-export const initializeLocalStorage = () => {
-  const accountInLocalStorage = localStorage.getItem("account");
-  const signOutInLocalStorage = localStorage.getItem("sign-out");
-
-  let parsedAccount;
-  let parsedSignOut;
-
-  if (!accountInLocalStorage) {
-    localStorage.setItem("account", JSON.stringify({}));
-    parsedAccount = {};
-  } else {
-    parsedAccount = JSON.parse(accountInLocalStorage);
-  }
-
-  if (!signOutInLocalStorage) {
-    localStorage.setItem("sign-out", JSON.stringify(false));
-    parsedSignOut = false;
-  } else {
-    parsedSignOut = JSON.parse(signOutInLocalStorage);
-  }
-};
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 export const ShoppingCartContext = createContext();
 
 export const ShoppingCartProvider = ({ children }) => {
 
-  // My account
-  const [account, setAccount] = useState({})
+  // // My account
+  const {
+    item: account,
+    saveItem: saveAccount,
+    } = useLocalStorage('account', {});
 
-  // Sign out
-  const [signOut, setSignOut] = useState(false)
+  // // Sign out
+    const {
+      item: signOut,
+      saveItem: saveSignOut,
+      } = useLocalStorage('sign-out',false);
   
   // Product Detail · Open/Close
   const [isProductDetailOpen, setIsProductDetailOpen] = useState(false);
-  const openProductDetail = () => setIsProductDetailOpen(true);
-  const closeProductDetail = () => setIsProductDetailOpen(false);
 
   // Checkout Side Menu · Open/Close
   const [isCheckoutSideMenuOpen, setIsCheckoutSideMenuOpen] = useState(false);
-  const openCheckoutSideMenu = () => setIsCheckoutSideMenuOpen(true);
-  const closeCheckoutSideMenu = () => setIsCheckoutSideMenuOpen(false);
 
   // Product Detail · Show product
   const [productToShow, setProductToShow] = useState({});
@@ -78,19 +59,18 @@ export const ShoppingCartProvider = ({ children }) => {
     }
   }, [items, searchByTitle]);
 
+
   return (
     <ShoppingCartContext.Provider
       value={{
         isProductDetailOpen,
-        openProductDetail,
-        closeProductDetail,
+        setIsProductDetailOpen,
         productToShow,
         setProductToShow,
         cartProducts,
         setCartProducts,
         isCheckoutSideMenuOpen,
-        openCheckoutSideMenu,
-        closeCheckoutSideMenu,
+        setIsCheckoutSideMenuOpen,
         order,
         setOrder,
         items,
@@ -100,9 +80,9 @@ export const ShoppingCartProvider = ({ children }) => {
         filteredItems,
         setFilteredItems,
         account,
-        setAccount,
+        saveAccount,
         signOut,
-        setSignOut,
+        saveSignOut,
       }}
     >
       {children}

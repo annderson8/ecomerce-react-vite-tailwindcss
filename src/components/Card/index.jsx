@@ -6,26 +6,24 @@ import { ShoppingCartContext } from "../../contexts";
 
 const Card = (data) => {
   const {
-    openProductDetail,
+    setIsProductDetailOpen,
     setProductToShow,
     cartProducts,
     setCartProducts,
-    openCheckoutSideMenu,
-    closeCheckoutSideMenu,
-    closeProductDetail,
+    setIsCheckoutSideMenuOpen,
   } = useContext(ShoppingCartContext);
 
   const showProduct = (productDetail) => {
-    closeCheckoutSideMenu();
-    openProductDetail();
+    setIsCheckoutSideMenuOpen(false);
+    setIsProductDetailOpen(true);
     setProductToShow(productDetail);
   };
 
   const addProductsToCart = (event, productData) => {
     event.stopPropagation();
     setCartProducts([...cartProducts, productData]);
-    openCheckoutSideMenu();
-    closeProductDetail();
+    setIsCheckoutSideMenuOpen(true);
+    setIsProductDetailOpen(false);
   };
 
   const renderIcon = (id) => {

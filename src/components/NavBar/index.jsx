@@ -5,38 +5,26 @@ import { ShoppingCartContext } from "../../contexts";
 import { ShoppingCart } from "../ShoppingCart";
 
 const Navbar = () => {
-  const { setSignOut, signOut, account } =
+  const {signOut, account, saveSignOut, setCartProducts, setIsCheckoutSideMenuOpen, setSearchByTitle, setIsProductDetailOpen } =
     useContext(ShoppingCartContext);
   const activeStyle = "underline underline-offset-4";
 
-  // Sign Out
-  const sign_Out = localStorage.getItem("sign-out");
-  const parsedSignOut = JSON.parse(sign_Out);
-  const isUserSignOut = signOut || parsedSignOut;
-
-  // Account
-  const localAccount = localStorage.getItem("account");
-  const parsedAccount = JSON.parse(localAccount);
-  // Has an account
-  const noAccountInLocalStorage = parsedAccount
-    ? Object.keys(parsedAccount).length === 0
-    : true;
-  const noAccountInLocalState = account
-    ? Object.keys(account).length === 0
-    : true;
-  const hasUserAnAccount = !noAccountInLocalStorage || !noAccountInLocalState;
+  const isUserSignOut = signOut;
+  const hasUserAnAccount = Object.keys(account).length !== 0;
 
   const handleSignOut = () => {
-    const stringifiedSignOut = JSON.stringify(true);
-    localStorage.setItem("sign-out", stringifiedSignOut);
-    setSignOut(true);
+    setCartProducts([]);
+    setIsCheckoutSideMenuOpen();
+    setIsProductDetailOpen(false);
+    setSearchByTitle('');
+    saveSignOut(true);
   };
 
   const renderView = () => {
     if (hasUserAnAccount && !isUserSignOut) {
       return (
         <>
-          <li className="text-black/60">{ parsedAccount?.email }</li>
+          <li className="text-black/60">{ account?.email }</li>
           <li>
             <NavLink
               to="/my-orders"

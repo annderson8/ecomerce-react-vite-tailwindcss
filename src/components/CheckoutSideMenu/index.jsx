@@ -8,7 +8,7 @@ import { totalPrice } from "../../utils";
 const CheckoutSideMenu = () => {
   const {
     isCheckoutSideMenuOpen,
-    closeCheckoutSideMenu,
+    setIsCheckoutSideMenuOpen,
     cartProducts,
     setCartProducts,
     order,
@@ -31,7 +31,7 @@ const CheckoutSideMenu = () => {
 
     setOrder([...order, orderToAdd]);
     setCartProducts([]);
-    closeCheckoutSideMenu();
+    setIsCheckoutSideMenuOpen(false);
     setSearchByTitle('');
   };
 
@@ -46,7 +46,7 @@ const CheckoutSideMenu = () => {
         <div>
           <XMarkIcon
             className="h-6 w-6 text-black cursor-pointer"
-            onClick={() => closeCheckoutSideMenu()}
+            onClick={() => setIsCheckoutSideMenuOpen(false)}
           ></XMarkIcon>
         </div>
       </div>

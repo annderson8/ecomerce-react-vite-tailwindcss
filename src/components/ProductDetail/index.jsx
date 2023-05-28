@@ -3,7 +3,7 @@ import { XMarkIcon } from "@heroicons/react/24/solid";
 import { ShoppingCartContext } from "../../contexts";
 
 const ProductDetail = () => {
-  const { productToShow, isProductDetailOpen, closeProductDetail } = useContext(ShoppingCartContext);
+  const { productToShow, isProductDetailOpen, setIsProductDetailOpen } = useContext(ShoppingCartContext);
 
   return (
     <aside 
@@ -12,7 +12,7 @@ const ProductDetail = () => {
         <h2 className="font-medium text-xl">Detail</h2>
         <div>
           <XMarkIcon
-            onClick={ () => closeProductDetail() }
+            onClick={ () => setIsProductDetailOpen(false) }
             className="h-6 w-6 text-black" />
         </div>
       </div>

@@ -2,7 +2,7 @@ import { useContext, useState, useRef } from "react";
 import { ShoppingCartContext } from "../../contexts";
 
 function MyAccount() {
-  const { setAccount } = useContext(ShoppingCartContext);
+  const { saveAccount } = useContext(ShoppingCartContext);
   const [view, setView] = useState("user-info");
   const account = localStorage.getItem("account");
   const parsedAccount = JSON.parse(account);
@@ -15,11 +15,7 @@ function MyAccount() {
       email: formData.get("email"),
       password: formData.get("password"),
     };
-
-    // Update account
-    const stringifiedAccount = JSON.stringify(data);
-    localStorage.setItem("account", stringifiedAccount);
-    setAccount(data);
+    saveAccount(data);
   };
 
   const renderUserInfo = () => {
